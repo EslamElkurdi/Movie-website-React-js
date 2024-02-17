@@ -11,27 +11,28 @@ import { useDispatch } from 'react-redux';
 import { addToFavorites } from '../../store/slice/favorites';
 import { removeFromFavorites } from '../../store/slice/favorites';
 import { useSelector } from 'react-redux';
+import { fetchMovies } from '../../store/slice/movies';
 
 
 
 function Movie() {
-    const [data, setData] = useState([]);
+    
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+
+    const dispatch1 = useDispatch();
+    const data = useSelector((state) => state.movies.data)
     // const [favMovies, setFavMovies] = useState([]);
 
     useEffect(() => {
-        fetchData();
+        // fetchData();
+        dispatch1(fetchMovies(currentPage));
     }, [currentPage]);
 
-    async function fetchData() {
-        try {
-            const response = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=6d3c0b6f63323479c21ff2aa2b2d3c3c&page=${currentPage}`);
-            setData(response.data.results);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }
+   
+   
+
+
 
     // Store
 
